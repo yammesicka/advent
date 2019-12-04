@@ -45,5 +45,5 @@ WANTED_OUTPUT = 19_690_720
 print(next(
     noun * 100 + verb
     for noun in range(MAX_GUESS) for verb in range(MAX_GUESS)
-    if get_output(list(program), noun, verb) == 19690720
+    if get_output(list(program), noun, verb) == WANTED_OUTPUT
 ))
