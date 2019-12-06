@@ -1,21 +1,28 @@
-from operator import add, eq, lt, not_, mul, truth
-from typing import Generator, List, Optional, Tuple
+import operator
+from typing import Any, Callable, Dict, Iterator, List, Optional
+
+from typing_extensions import TypedDict
 
 
-INPUTS = [1]
-OPCODES = {
-    1: {'size': 4, 'function': add},
-    2: {'size': 4, 'function': mul},
-    3: {'size': 2, 'function': lambda: next(iter(INPUTS))},
+Command = TypedDict(
+    'Command',
+    {'size': int, 'function': Callable[..., Any], 'void': int},
+    total=False,
+)
+ParsedCmds = Iterator[int]
+
+INPUTS = iter([1])
+OPCODES: Dict[int, Command] = {
+    1: {'size': 4, 'function': operator.add},
+    2: {'size': 4, 'function': operator.mul},
+    3: {'size': 2, 'function': lambda: next(INPUTS)},
     4: {'size': 2, 'function': print, 'void': 1},
-    5: {'size': 3, 'function': truth},
-    6: {'size': 3, 'function': not_},
-    7: {'size': 4, 'function': lambda x, y: bool(lt(x, y))},
-    8: {'size': 4, 'function': lambda x, y: bool(eq(x, y))},
+    5: {'size': 3, 'function': operator.truth},
+    6: {'size': 3, 'function': operator.not_},
+    7: {'size': 4, 'function': lambda x, y: bool(operator.lt(x, y))},
+    8: {'size': 4, 'function': lambda x, y: bool(operator.eq(x, y))},
 }
-JUMP_OPCODES = set([5, 6])
-
-Instructions = Generator[List[int], None, None]
+JUMP_OPCODES = {5, 6}
 
 
 def get_input() -> List[int]:
@@ -23,17 +30,17 @@ def get_input() -> List[int]:
         return list(map(int, challenge_input.read().strip().split(',')))
 
 
-def parse_command(code: List[int], instruction: int, *args) -> Tuple[str, int]:
+def parse_command(code: List[int], instruction: int, *args: int) -> ParsedCmds:
     padded_opcode = str(instruction).zfill(5)
     modes, op = padded_opcode[2::-1], int(padded_opcode[3:])
     yield op
 
     argc = OPCODES[op]['size'] - 2
     for param in range(argc + OPCODES[op].get('void', 0)):
-        yield code[args[param]] if modes[param] == "0" else args[param]
+        yield code[args[param]] if modes[param] == '0' else args[param]
 
     write_to = args[-1] if not OPCODES[op].get('void', False) else None
-    is_relative_jump = (op in JUMP_OPCODES and modes[argc] == "0")
+    is_relative_jump = (op in JUMP_OPCODES and modes[argc] == '0')
     yield code[args[-1]] if is_relative_jump else write_to
 
 
@@ -51,4 +58,4 @@ def get_output(program: List[int]) -> Optional[int]:
 
 
 program = get_input()
-get_output(list(program))
+get_output(program)
