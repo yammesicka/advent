@@ -24,7 +24,7 @@ def get_travel(instructions: List[str]) -> Dict[complex, int]:
         while src != dst:
             src += direction
             total_steps_taken += 1
-            # Remember only the distance to the first visit only
+            # Remember only the distance to the first visit
             points[src] = points.get(src, total_steps_taken)
     return points
 
