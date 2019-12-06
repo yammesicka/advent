@@ -32,5 +32,4 @@ flat_orbiters = map_flatter(data)
 print(sum(map(len, flat_orbiters.values())))
 
 # Part 2
-my_orbits, santa_orbits = set(flat_orbiters['YOU']), set(flat_orbiters['SAN'])
-print(len(set(my_orbits) ^ set(santa_orbits)))
+print(len(set(flat_orbiters['YOU']) ^ set(flat_orbiters['SAN'])))
