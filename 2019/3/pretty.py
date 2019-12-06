@@ -10,7 +10,7 @@ def manhattan_distance(number: complex) -> float:
 
 def get_input() -> Tuple[List[str], ...]:
     with open('input.txt', 'r') as challenge_input:
-        return tuple(line.strip().split(',') for line in challenge_input)
+        yield from (line.strip().split(',') for line in challenge_input)
 
 
 def get_travel(instructions: List[str]) -> Dict[complex, int]:
@@ -30,13 +30,11 @@ def get_travel(instructions: List[str]) -> Dict[complex, int]:
 
 
 # Part 1
-inputs = get_input()
-visited1, visited2 = get_travel(inputs[0]), get_travel(inputs[1])
+visited1, visited2 = map(get_travel, get_input())
 intersections = set(visited1) & set(visited2)
 closest = min(intersections, key=manhattan_distance)
 print(manhattan_distance(closest))
 
-
 # Part 2
-distances = ((visited1[k], visited2[k]) for k in intersections)
-print(sum(min(distances, key=sum)))
+distances_sum = (sum([visited1[k], visited2[k]]) for k in intersections)
+print(min(distances_sum))
