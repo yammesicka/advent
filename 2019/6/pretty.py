@@ -17,7 +17,7 @@ def parse_input(inputs: Iterable[str]) -> Dict[str, List[str]]:
 
 
 def map_flatter(starmap: Dict[str, List[str]]) -> Dict[str, List[str]]:
-    @functools.lru_cache()
+    @functools.lru_cache(maxsize=None)
     def flat_map(start: str) -> List[str]:
         if start not in starmap:
             return []
