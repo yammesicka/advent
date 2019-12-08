@@ -1,5 +1,5 @@
 import itertools
-from typing import List
+from typing import Tuple
 
 
 HEIGHT, WIDTH = 6, 25
@@ -19,7 +19,7 @@ print(fewest_zeros.count('1') * fewest_zeros.count('2'))
 
 
 # Part 2
-def parse_pixel_from_layers(layers: List[str]) -> str:
+def parse_pixel_from_layers(layers: Tuple[str, ...]) -> str:
     try:
         return next(itertools.dropwhile('2'.__eq__, layers))
     except StopIteration:
