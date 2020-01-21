@@ -16,5 +16,4 @@ def calculate_total_fuel(fuel: int) -> int:
 # Part 1
 print(sum(fuel // 3 - 2 for fuel in map(int, get_input())))
 
-# Part 2
-print(sum(map(calculate_total_fuel, map(int, get_input()))))
+print("Barvaz")
