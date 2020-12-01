@@ -5,7 +5,7 @@ from typing import Iterator, Optional, Set, Tuple
 
 def read_lines(path: pathlib.Path) -> Iterator[int]:
     with open(path) as f:
-        yield from (int(str.strip(line)) for line in f)
+        yield from map(int, f)
 
 
 def get_two_candidates_by_sum(
