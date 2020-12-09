@@ -1,4 +1,4 @@
-import functools
+import math
 import operator
 import pathlib
 from typing import Iterable, Tuple
@@ -9,16 +9,13 @@ def read_lines(path: pathlib.Path) -> Iterable[str]:
         yield from f
 
 
-def vertical_jumper(lines: Iterable[str], jumps: int) -> Iterable[str]:
-    for place, line in enumerate(lines):
-        if place % jumps == 0:
-            yield line
+def jump_lines(lines: Iterable[str], jumps: int) -> Iterable[str]:
+    yield from (line for place, line in enumerate(lines) if place % jumps == 0)
 
 
-def slide(map_lines: Iterable[str], jumps: Tuple[int, int]) -> Iterable[bool]:
+def slide(map_lines: Iterable[str], jumps: Tuple[int, int]) -> Iterable[str]:
     place = 0
-    lines = vertical_jumper(map_lines, jumps[1])
-    for line in lines:
+    for line in jump_lines(map_lines, jumps=jumps[1]):
         yield line[place]
         place = (place + jumps[0]) % (len(line) - 1)
 
@@ -38,11 +35,11 @@ def part_1():
 
 def part_2():
     trees_map = list(read_lines(pathlib.Path('input.txt')))
-    slider = functools.partial(slide, trees_map)
     jumps = ((1, 1), (3, 1), (5, 1), (7, 1), (1, 2))
-    trees = (count_trees(slider(jump)) for jump in jumps)
-    print(functools.reduce(operator.mul, trees, 1))
+    trees = (count_trees(slide(trees_map, jump)) for jump in jumps)
+    print(math.prod(trees))
 
 
 if __name__ == '__main__':
+    part_1()
     part_2()

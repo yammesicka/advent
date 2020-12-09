@@ -4,7 +4,7 @@ from typing import Iterator, TextIO
 
 
 def read_groups(path: pathlib.Path) -> Iterator[list[str]]:
-    def read_next_group(f: TextIO):
+    def read_next_group(f: TextIO) -> list[str]:
         lines = []
         while (line := f.readline()) and line != os.linesep:
             lines.append(line.rstrip())
