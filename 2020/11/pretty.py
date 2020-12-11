@@ -15,7 +15,7 @@ SOME_SEAT = {EMPTY_SEAT, TAKEN_SEAT}
 
 
 MATRIX = list[list[str]]
-SEARCHER = Callable[[MATRIX, int, int], Iterator[str]]
+SEARCHER = Callable[[MATRIX, int, int], Iterator[Optional[str]]]
 
 
 def read_lines(path: pathlib.Path) -> Iterator[list[str]]:
@@ -33,7 +33,7 @@ def get_seats(seats: MATRIX) -> Iterator[tuple[str, int, int]]:
             yield (seat, i, j)
 
 
-def get_adjacents(seats: MATRIX, x0: int, y0: int) -> Iterator[str]:
+def get_adjacents(seats: MATRIX, x0: int, y0: int) -> Iterator[Optional[str]]:
     yield from (
         seats[x0 + x1][y0 + y1]
         for x1, y1 in MOVES
@@ -52,7 +52,7 @@ def get_viewables(seats: MATRIX, x0: int, y0: int) -> Iterator[Optional[str]]:
 
 
 def stabalize(seats: MATRIX, searcher: SEARCHER, max_neighbors: int) -> MATRIX:
-    def get_updated_seat(seat: str, nearby: list[str]) -> str:
+    def get_updated_seat(seat: str, nearby: list[Optional[str]]) -> str:
         taken_seats = nearby.count(TAKEN_SEAT)
         seat_condition = {
             seat == EMPTY_SEAT and not taken_seats:              TAKEN_SEAT,
