@@ -30,7 +30,8 @@ def is_in_bounds(matrix: MATRIX, x: int, y: int) -> bool:
 def get_seats(seats: MATRIX) -> Iterator[tuple[str, int, int]]:
     for i, line in enumerate(seats):
         for j, seat in enumerate(line):
-            yield (seat, i, j)
+            if seat in SOME_SEAT:
+                yield (seat, i, j)
 
 
 def get_adjacents(seats: MATRIX, x0: int, y0: int) -> Iterator[Optional[str]]:
@@ -65,7 +66,7 @@ def stabalize(seats: MATRIX, searcher: SEARCHER, max_neighbors: int) -> MATRIX:
     while seats != matrix_copy:
         seats = copy.deepcopy(matrix_copy)
         for seat, i, j in get_seats(seats):
-            nearby = list(searcher(seats, i, j)) if seat != '.' else []
+            nearby = list(searcher(seats, i, j))
             matrix_copy[i][j] = get_updated_seat(seat, nearby)
     return matrix_copy
 
