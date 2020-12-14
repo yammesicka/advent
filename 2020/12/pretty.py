@@ -11,9 +11,9 @@ def get_manhattan_distance(x: complex, y: complex) -> int:
 
 
 def rotate_head(head: str, direction: str, angle: int) -> str:
-    angle //= 90 if direction == 'R' else -90
     current = COMPESS.index(head)
-    return COMPESS[(current + angle) % 4]
+    ticks = angle // (90 if direction == 'R' else -90)
+    return COMPESS[(current + ticks) % 4]
 
 
 def sail_ship(moves: list[tuple[str, str]]) -> complex:
@@ -29,7 +29,8 @@ def sail_ship(moves: list[tuple[str, str]]) -> complex:
 
 
 def rotate_waypoint(waypoint: complex, direction: str, angle: int) -> complex:
-    change = (-1j if direction == 'R' else 1j) ** (int(angle) // 90)
+    direction_sign = -1 if direction == 'R' else 1
+    change = (direction_sign * 1j) ** (int(angle) // 90)
     return waypoint * change
 
 
