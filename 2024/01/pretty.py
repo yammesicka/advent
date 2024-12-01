@@ -37,4 +37,4 @@ def calc_2(locations: Locations) -> int:
 
 
 print(calc_1(sort(parse(read(INPUT_FILE)))))
-print(calc_2(sort(parse(read(INPUT_FILE)))))
+print(calc_2(parse(read(INPUT_FILE))))
