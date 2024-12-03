@@ -15,8 +15,8 @@ muls = re.findall(MUL_NUMBERS, CODE)
 print(sum(int(a) * int(b) for a, b in muls))
 
 # Part 2
-cleaned = re.sub(r"don't\(\).*?do\(\)", "", CODE, 0, re.DOTALL)
-cleaned = re.sub(r"don't\(\).*", "", cleaned, 0, re.DOTALL)
+cleaned = re.sub(r"don't\(\).*?do\(\)", "", CODE, flags=re.DOTALL)
+cleaned = re.sub(r"don't\(\).*", "", cleaned, flags=re.DOTALL)
 
 muls = re.findall(MUL_NUMBERS, cleaned)
 print(sum(int(a) * int(b) for a, b in muls))
