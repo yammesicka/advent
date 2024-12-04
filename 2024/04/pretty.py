@@ -44,12 +44,12 @@ print(sum(itertools.starmap(is_xmas, potential_word_positions)))
 
 # Part two
 def is_x_mas(start_point: XY, diagonals: tuple[XY, ...] = DIAGONALS) -> int:
-    found_count = 0
+    diagonals_around_found = 0
     for diagonal in diagonals:
         adjusted_start = new_point(start_point, diagonal, steps=-1)
         if matches_word(adjusted_start, diagonal, "MAS", TEXT):
-            found_count += 1
-        if found_count == 2:
+            diagonals_around_found += 1
+        if diagonals_around_found == 2:
             return True
     return False
 
