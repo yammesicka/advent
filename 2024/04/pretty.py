@@ -1,6 +1,6 @@
 import functools
-from pathlib import Path
 import itertools
+from pathlib import Path
 
 
 type XY = tuple[int, int]
