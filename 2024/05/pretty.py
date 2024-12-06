@@ -27,15 +27,10 @@ print(sum(middle(pages) for pages in UPDATES if is_valid_order(pages)))
 
 # Part 2:
 def bubble_sort(pages: list[str], rules: set[tuple[str, str]] = RULES) -> list[str]:
-    i = j = 0
-    while i < len(pages):
-        j = i + 1
-        while j < len(pages):
+    for i in range(len(pages)):
+        for j in range(i + 1, len(pages)):
             if not follow_rules(pages[i], pages[j], rules):
                 pages[i], pages[j] = pages[j], pages[i]
-                j = i
-            j += 1
-        i += 1
     return pages
 
 
