@@ -25,12 +25,10 @@ def jump_once(a: complex, b: complex, distance: complex, grid: Grid) -> set[comp
 
 
 def jump_infinitely(a: complex, b: complex, distance: complex, grid: Grid) -> set[complex]:
-    jumps = {a, b}
-    while (a := a + distance) in grid:
-        jumps.add(a)
-    while (b := b - distance) in grid:
-        jumps.add(b)
-    return jumps
+    return {
+        *itertools.takewhile(grid.__contains__, itertools.count(a, distance)),
+        *itertools.takewhile(grid.__contains__, itertools.count(b, -distance))
+    }
 
 
 def find_antennas(jump: Callable[..., set[complex]], grid: Grid = GRID) -> set[complex]:
