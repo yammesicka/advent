@@ -7,8 +7,8 @@ STONES = list(map(int, (Path(__file__).parent / "input.txt").read_text().split()
 
 @cache
 def count(stone: int, steps: int) -> int:
-    if steps == 1:
-        return 2 if len(str(stone)) % 2 == 0 else 1
+    if steps == 0:
+        return 1
 
     if stone == 0:
         return count(1, steps - 1)
