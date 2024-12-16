@@ -20,7 +20,7 @@ def move(start: complex, step: complex, g: Grid = grid) -> Grid | None:
         g[current] == BOX_R and move(current - 1j, step, g) and move(current, step, g),
         g[current] == EMPTY,
     )):
-        g[start], g[current] = g[current], g[current - step]
+        g[start], g[current] = g[current], g[start]
         return g
     
 
